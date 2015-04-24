@@ -42,9 +42,10 @@ class Main extends PluginBase implements Listener {
 			$p->sendMessage("FastTransfer not found...!");
 			return;
 		}
-		$p = $event->getPlayer();
+		$tr = $this->getServer()->getPluginManager()->getPlugin("FastTransfer");
+		list($addr,$port) = $tr
 		$tr->transferPlayer($p,$addr,$port);
 		if ($this->broadcast)
-			$this->getServer()->broadcastMessage($p->getName()." transferred!");
+		$this->getServer()->broadcastMessage($pl->getName()." transferred...");
 			}
 		}
