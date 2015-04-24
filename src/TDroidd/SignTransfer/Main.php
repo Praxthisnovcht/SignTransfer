@@ -31,7 +31,7 @@ class Main extends PluginBase implements Listener {
 			$port = $sign[2];
 			if (empty($addr)) return null;
 			$port = intval($port);
-			if ($port == 0) $port = 19132;
+			if ($port == 0) $port = 19132; // Default Port
 			return [$address,$port];
 			$p->sendMessage(TextFormat::RED . "Unexpected error");
 		}
@@ -42,9 +42,7 @@ class Main extends PluginBase implements Listener {
 			$p->sendMessage("FastTransfer not found...!");
 			return;
 		}
-		list($addr,$port) = $address;
-		$this->getLogger()->info("Player:  ".$p->getName()." was transferred.".
-										 $addr.":".$port);
+		$p = $event->getPlayer();
 		$tr->transferPlayer($p,$addr,$port);
 		if ($this->broadcast)
 			$this->getServer()->broadcastMessage($p->getName()." transferred!");
