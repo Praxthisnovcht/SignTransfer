@@ -1,2 +1,2 @@
 # SignTransfer
-Complement for FastTransfer  plugin with signs.
+Complement to use FastTransfer plugin with signs.
