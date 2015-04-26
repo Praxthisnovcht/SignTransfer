@@ -15,6 +15,7 @@ class Main extends PluginBase implements Listener {
      $this->getLogger()->info("Enabling Add-On for FastTransfer");
      }
 }
+	private function checkSign(Player $pl,array $sign) {
      	if (isset($this->text["Transfer"][$sign[0]])) {
 			// Fast transfer!
 			if(!$pl->hasPermission("sign.transfer.place")) {
@@ -59,5 +60,6 @@ class Main extends PluginBase implements Listener {
 		$ft->transferPlayer($pl,$addr,$port);
 		if ($this->broadcast)
 			$this->getServer()->broadcastMessage($pl->getName()." transferred...");
+		}
 	}
 }
