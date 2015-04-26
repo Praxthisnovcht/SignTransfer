@@ -7,6 +7,7 @@ use pocketmine\event\block\SignChangeEvent;
 use pocketmine\plugin\PluginManager;
 use shoghicp\FastTransfer;
 use pocketmine\tile\Sign;
+use pocketmine\item\Item;
 use pocketmine\event\player\PlayerInteractEvent;
 
 class Main extends PluginBase implements Listener {
@@ -16,24 +17,27 @@ class Main extends PluginBase implements Listener {
 	 $this->getServer()->getPluginManager()->registerEvents($this, $this);
      }
 }
-	private function checkSign(Player $pl,array $sign) {
-     	if (isset($this->text[Transfer][$sign[0]])) {
-			// Fast transfer!
-			if(!$pl->hasPermission("sign.transfer.place")) {
-				$this->breakSign($pl,$tile,"You do not have permissions\nTto make a Transfer sign.");
-				return;
-				}
+
+    public function playerBlockTouch(PlayerInteractEvent $event){
+        if($event->getBlock()->getID() == 323 || $event->getBlock()->getID() == 63 || $event->getBlock()->getID() == 68){
+            $sign = $event->getPlayer()->getLevel()->getTile($event->getBlock());
+            if(!($sign instanceof Sign)){
+                return;
+            }
      	}
 		if ($event->getItem()->getId() == Item::SIGN) {
 			// Check if the user is holding a sign this stops teleports
+			$pl = $event->getPlayer();
 			$pl->sendMessage("Can not teleport while holding sign!");
 			return;
 		}
 				if(!$pl->hasPermission("sign.transfer.touch")) {
+			$pl = $event->getPlayer();
 			$pl->sendMessage("Did you expect something to happen?");
 			return;
 		}
-		if (isset($this->text[Transfer][$sign[0]])) {
+			$sign = $sign->getText();
+            if($sign[0]=='[Transfer]'){
 			$address = $sign[1];
 			$port = $sign[2];
 			if (empty($address)) return null;
