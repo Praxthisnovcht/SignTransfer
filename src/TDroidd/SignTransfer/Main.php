@@ -33,7 +33,7 @@ class Main extends PluginBase implements Listener {
 		}
 				if(!$pl->hasPermission("sign.transfer.touch")) {
 			$pl = $event->getPlayer();
-			$pl->sendMessage("Did you expect something to happen?");
+			$pl->sendMessage("You cant be transferred");
 			return;
 		}
 			$sign = $sign->getText();
@@ -42,7 +42,7 @@ class Main extends PluginBase implements Listener {
 			$port = $sign[2];
 			if (empty($address)) return null;
 			$port = intval($port);
-			if ($port == 0) $port = 19132; // Default for Minecraft PE
+			if ($port == 0) $port = 19132; // Default
 			return [$address,$port];
 		}
 		$this->teleporters[$pl->getName()] = time();
