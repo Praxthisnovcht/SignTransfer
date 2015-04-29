@@ -1,20 +1,39 @@
 <?php
 namespace TDroidd\SignTransfer;
+
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\utils\TextFormat;
 use pocketmine\event\block\SignChangeEvent;
 use pocketmine\plugin\PluginManager;
-use shoghicp\FastTransfer;
 use pocketmine\tile\Sign;
 use pocketmine\item\Item;
 use pocketmine\event\player\PlayerInteractEvent;
 
+	public $plugins;
+	
+	
 class Main extends PluginBase implements Listener {
+	
     public function onEnable(){
      if ($this->getServer()->getPluginManager()->getPlugin("FastTransfer")){
-     $this->getLogger()->info("Enabling Add-On for FastTransfer");
+     $this->getLogger()->info(TextFormat::GREEN ."Enabling Add-On for FastTransfer");
 	 $this->getServer()->getPluginManager()->registerEvents($this, $this);
+/**
+                             $this->getServer()->getPluginManager()->registerEvents($this, $this);
+                                 $load = $this->getServer()->getPluginManager();
+                                      if(!($this->plugins = $load->getPlugin("FastTransfer"))){
+                                         $this->getLogger()->info(TextFormat::RED."SignTransfer not loaded, I can't find it needs FastTransfer Plugin");
+                                             $this->getLogger()->info(TextFormat::GOLD.". Please install:");
+                                                 $this->getLogger()->info(TextFormat::GOLD."<FastTransfer>");
+                                                     } else {
+                                                         $this->getLogger()->info(TextFormat::GREEN."Enabling Add-On for :".
+			                                                 TextFormat::GREEN.$this->plugins->getName()." v".
+			                                                     $this->plugins->getDescription()->getVersion());
+																 		 $this->getLogger()->info(TextFormat::GREEN."FastTransfer Enabled!");
+																		 
+																		 # CONTINUE LATER
+*/    
      }
 }
 
@@ -28,12 +47,12 @@ class Main extends PluginBase implements Listener {
 		if ($event->getItem()->getId() == Item::SIGN) {
 			// Check if the user is holding a sign this stops teleports
 			$pl = $event->getPlayer();
-			$pl->sendMessage("Can not teleport while holding sign!");
+			$pl->sendMessage(TextFormat::RED ."Can not teleport while holding sign!");
 			return;
 		}
 				if(!$pl->hasPermission("sign.transfer.touch")) {
 			$pl = $event->getPlayer();
-			$pl->sendMessage("You cant be transferred");
+			$pl->sendMessage(TextFormat::RED ."You cant be transferred");
 			return;
 		}
 			$sign = $sign->getText();
@@ -48,7 +67,7 @@ class Main extends PluginBase implements Listener {
 		$this->teleporters[$pl->getName()] = time();
 		$ft = $this->getServer()->getPluginManager()->getPlugin("FastTransfer");
 		if (!$ft) {
-			$this->getLogger()->info("FastTransfer is not installed on this server");
+			$this->getLogger()->info("FastTransfer is not installed on this server"); // REMOVED LATER
 			$pl->sendMessage("Nothing happens!");
 			$pl->sendMessage("Someone has removed FastTransfer.");
 			return;
